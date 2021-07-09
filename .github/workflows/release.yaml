@@ -1,0 +1,26 @@
+name: release
+
+on:
+  push:
+    tags:
+      - v*.*.*
+    branches-ignore:
+      - '**'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check gcc version
+        run: gcc version
+      - name: Install curl-dev
+        run: sudo apt-get install libcurl4-openssl-dev
+      - name: Run build
+        run: cd libnss-json && make lib
+      - name: Create Release and upload
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: libnss-json/target/*

@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Check gcc version
-        run: gcc version
+        run: gcc --version
       - name: Install curl-dev
         run: sudo apt-get install libcurl4-openssl-dev
       - name: Run build
